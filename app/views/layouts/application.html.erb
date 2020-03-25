@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BBS Clone</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/83beaa6ece.js" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+        <div class="drop_shadow">
+            <header class="navbar header">
+                <div class="container">
+                    <div class="row">
+                        <div class= "col-xs-4">
+                            <div class="navbar-left navbar-user">
+                                <h2><%= link_to "5ch_clone", root_path %></h2>
+                            </div>
+                        </div>
+                        <% if user_signed_in? %>
+                            <div class= "col-xs-4">
+                                <span class="user-name">
+                                    <strong>
+                                        <%= current_user.name %>さん 
+                                    </strong>
+                                </span>
+                            </div>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><%= link_to "マイページ", user_path(current_user.id), class:"btn header-btn" %></li>
+                                <li><%= link_to "スレッド一覧", boards_path, class:"btn header-btn" %></li>
+                                <li><%= link_to "ログアウト", destroy_user_session_path, class:"btn header-btn", method: :delete %></li>
+                            </ul>
+                        <% else %>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><%= link_to "スレッド一覧", boards_path, class:"btn header-btn" %></li>
+                                <li><%= link_to "ログイン", new_user_session_path, class:"btn header-btn" %></li>
+                                <li><%= link_to "新規登録", new_user_registration_path, class:"btn header-btn" %></li>
+                            </ul>
+                        <% end %>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <% flash.each do |message_type, message| %>
+            <div class="alert alert-<%= message_type %> alert-dismissible" role="alert">
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <%= simple_format message %>
+            </div>
+        <% end %>
+        <%= yield %>
+    </div>
+  </body>
+</html>
