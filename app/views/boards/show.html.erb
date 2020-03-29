@@ -3,6 +3,9 @@
 		<h3>
 		  <strong><%= @board.title %></strong>
 		</h3>
+		カテゴリー：<% @categories.each do |category| %>
+		   <%= category.category %>
+		  <% end %>
 		<p>
 		1. <%= @board.user.name %> <%= @board.created_at %><br>
 		<%= @board.body %><br>
@@ -13,24 +16,24 @@
 					<%= n %>.
 					<%= comment.user.name %> <%= comment.created_at %>
 					<% if comment.user == current_user %>
-						<%= link_to "[削除]", comment_path, method: :delete %>
+						<%= link_to "[削除]", board_comment_path(@board, comment), method: :delete %>
 					<% end %>
 					<br>
 					<%= comment.comment %><br>
 					<% n = n + 1 %>
 				</p>
 			<% end %>
-
-		<%= form_with(model: @comment, local: true) do |f| %>
-			<div class="field">
-				<%= f.label :comment %>
-				<%= f.text_area :comment %>
-				<%= f.hidden_field :user_id, :value => current_user.id %>
-				<%= f.hidden_field :board_id, :value => @board.id %>
-			</div>
-			<%= f.submit "コメント送信" %>
+		<% if user_signed_in? %>
+			<%= form_with model: [@board, @comment], local: true do |f| %>
+				<div class="field">
+					<%= f.label :comment %>
+					<%= f.text_area :comment %>
+					<%= f.hidden_field :user_id, :value => current_user.id %>
+					<%= f.hidden_field :board_id, :value => @board.id %>
+				</div>
+				<%= f.submit "コメント送信" %>
+			<% end %>
 		<% end %>
-
 		<%= link_to 'Back', boards_path %>
 	</div>
 </div>

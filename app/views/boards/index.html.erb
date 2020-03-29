@@ -1,34 +1,24 @@
 <div class="container">
     <div class="row">
 
-    <h1>Boards</h1>
-
-    <table>
-      <thead>
-        <tr>
-          <th>User</th>
-          <th>Title</th>
-          <th>Body</th>
-          <th colspan="3"></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @boards.each do |board| %>
-          <tr>
-            <td><%= board.user_id %></td>
-            <td><%= board.title %></td>
-            <td><%= board.body %></td>
-            <td><%= link_to 'Show', board %></td>
-            <td><%= link_to 'Destroy', board, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
+    <% provide(:title, @title) %>
+    <h1><%= @title %></h1>
+    <ul class="users">
+      <% @boards.each do |board| %>
+        <div class="board">
+          <%= link_to "#{board.title}", board %> <%= board.created_at %>
+          <% @categories.where(board_id: board).each do |category| %>
+            <span style="font-size: 5px;"><%= category.category %></span>
+          <% end %>
+          <% if board.user == current_user %>
+            <%= link_to '[削除]', board, method: :delete, data: { confirm: '削除してもよろしいですか？' } %>
+          <% end %>
+          <br>
+          <%= board.body %><br>
+        </div>
         <% end %>
-      </tbody>
-    </table>
-
+    </ul>
     <br>
-
-    <%= link_to 'New Board', new_board_path, class:"btn btn-default" %>
 
     </div>
 </div>

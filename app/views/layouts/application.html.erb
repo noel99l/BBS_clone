@@ -25,16 +25,41 @@
                             <div class= "col-xs-4">
                                 <span class="user-name">
                                     <strong>
-                                        <%= current_user.name %>さん 
+                                        <%= current_user.name %>さん
                                     </strong>
                                 </span>
+                                <div class="search_form">
+                                    <%= search_form_for @q do |f| %>
+                                        <div class="input-group">
+                                            <%= f.search_field :title_cont, placeholder: "掲示板検索", class: 'form-control' %>
+                                            <span class="input-group-btn">
+                                            <%= f.submit '検索', class: "btn btn-primary" %>
+                                            </span>
+                                        </div>
+                                    <% end %>
+                                </div>
                             </div>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><%= link_to "マイページ", user_path(current_user.id), class:"btn header-btn" %></li>
-                                <li><%= link_to "スレッド一覧", boards_path, class:"btn header-btn" %></li>
-                                <li><%= link_to "ログアウト", destroy_user_session_path, class:"btn header-btn", method: :delete %></li>
-                            </ul>
+                            <div class= "col-xs-4">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><%= link_to "マイページ", user_path(current_user.id), class:"btn header-btn" %></li>
+                                    <li><%= link_to "スレッド一覧", boards_path, class:"btn header-btn" %></li>
+                                    <li><%= link_to '新規掲示板', new_board_path, class:"btn header-btn" %></li>
+                                    <li><%= link_to "ログアウト", destroy_user_session_path, class:"btn header-btn", method: :delete %></li>
+                                </ul>
+                            </div>
                         <% else %>
+                            <div class= "col-xs-4">
+                                <div class="search_form">
+                                    <%= search_form_for @q do |f| %>
+                                        <div class="input-group">
+                                            <%= f.search_field :title_cont, placeholder: "掲示板検索", class: 'form-control' %>
+                                            <span class="input-group-btn">
+                                            <%= f.submit 'Search', class: "btn btn-primary" %>
+                                            </span>
+                                        </div>
+                                    <% end %>
+                                </div>
+                            </div>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><%= link_to "スレッド一覧", boards_path, class:"btn header-btn" %></li>
                                 <li><%= link_to "ログイン", new_user_session_path, class:"btn header-btn" %></li>

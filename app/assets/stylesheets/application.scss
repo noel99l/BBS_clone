@@ -16,3 +16,13 @@
 
  @import "bootstrap-sprockets";
  @import "bootstrap";
+
+/* Search form  */
+
+.search_form {
+  overflow: auto;
+  margin: 10px;
+  .input-group {
+    width: 305px;
+  }
+}

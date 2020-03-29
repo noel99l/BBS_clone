@@ -1,0 +1,18 @@
+<div class="container">
+	<div class="low">
+		<h3>マイページ</h3>
+		<div class="col-xs-10 col-xs-offset-1">
+			<table class="table">
+				<tr>
+					<th>名前</th>
+					<td><%= @user.name %></td>
+				</tr>
+				<tr>
+					<th>メールアドレス</th>
+					<td><%= @user.email %></td>
+				</tr>
+			</table>
+			<%= link_to "編集", edit_user_registration_path(current_user), class:"btn btn-warning pull-right" %>
+		</div>
+	</div>
+</div>
