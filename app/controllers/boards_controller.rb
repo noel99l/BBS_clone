@@ -1,34 +1,25 @@
 class BoardsController < ApplicationController
   before_action :set_board, only: [:show, :edit, :update, :destroy]
-  before_action :login, except: [:index, :show]
+  before_action :login?, except: [:index, :show]
 
-  # GET /boards
-  # GET /boards.json
   def index
     if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
       @q = Board.ransack(search_params, activated: true)
-      @title = "検索結果"
+      @title = "掲示板検索結果"
     else
       @q = Board.ransack(activated: true)
       @title = "掲示板一覧"
     end
-    @boards = @q.result.paginate(page: params[:page])
+    @boards = @q.result(distinct: true).paginate(page: params[:page], per_page: 10)
     @categories = Category.all
   end
 
-  #   @boards = Board.search(params[:search])
-  #   @categories = Category.all
-  # end
-
-  # GET /boards/1
-  # GET /boards/1.json
   def show
     @comments = Comment.where(board_id: @board.id)
     @categories = Category.where(board_id: @board.id)
     @comment = Comment.new
   end
 
-  # GET /boards/new
   def new
     @board = Board.new
     @category = @board.categories.build
@@ -38,8 +29,6 @@ class BoardsController < ApplicationController
     @board = Board.new
   end
 
-  # POST /boards
-  # POST /boards.json
   def create
     @board = Board.new(board_params)
     respond_to do |format|
@@ -53,8 +42,6 @@ class BoardsController < ApplicationController
     end
   end
 
-  # DELETE /boards/1
-  # DELETE /boards/1.json
   def destroy
     @board.destroy
     respond_to do |format|
@@ -64,23 +51,21 @@ class BoardsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_board
       @board = Board.find(params[:id])
     end
 
-    def login
+    def login?
       unless user_signed_in?
         redirect_to root_path
       end
     end
 
-    # Only allow a list of trusted parameters through.
     def board_params
       params.require(:board).permit(:user_id, :title, :body, categories_attributes: [:id, :board_id, :category, :_destroy])
     end
 
     def search_params
-      params.require(:q).permit(:title_cont)
+      params.require(:q).permit(:title_or_body_or_categories_category_or_comments_comment_cont_any)
     end
 end

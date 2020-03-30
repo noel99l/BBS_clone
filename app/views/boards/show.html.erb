@@ -7,33 +7,32 @@
 		   <%= category.category %>
 		  <% end %>
 		<p>
-		1. <%= @board.user.name %> <%= @board.created_at %><br>
-		<%= @board.body %><br>
+		1. <%= @board.user.name %> <%= l @board.created_at %><br>
+		<%= safe_join(@board.body.split("\n"),tag(:br))%>
 		</p>
 		<% n = 2  %>
 			<% @comments.each do |comment| %>
 				<p>
 					<%= n %>.
-					<%= comment.user.name %> <%= comment.created_at %>
+					<%= comment.user.name %> <%= l comment.created_at %>
 					<% if comment.user == current_user %>
-						<%= link_to "[削除]", board_comment_path(@board, comment), method: :delete %>
+						<%= link_to "[削除]", board_comment_path(@board, comment), method: :delete, data: { confirm: '削除してもよろしいですか？' } %>
 					<% end %>
 					<br>
-					<%= comment.comment %><br>
+					<%= safe_join(comment.comment.split("\n"),tag(:br))%>
 					<% n = n + 1 %>
 				</p>
 			<% end %>
 		<% if user_signed_in? %>
 			<%= form_with model: [@board, @comment], local: true do |f| %>
 				<div class="field">
-					<%= f.label :comment %>
-					<%= f.text_area :comment %>
+					<%= f.text_area :comment, rows:'5', class: "form-control", placeholder: "コメント"%>
 					<%= f.hidden_field :user_id, :value => current_user.id %>
 					<%= f.hidden_field :board_id, :value => @board.id %>
 				</div>
-				<%= f.submit "コメント送信" %>
+				<%= f.submit "コメント送信", class:"btn btn-primary pull-right" %>
 			<% end %>
 		<% end %>
-		<%= link_to 'Back', boards_path %>
+		<%= link_to '戻る', boards_path, class:"btn btn-warning pull-left" %>
 	</div>
 </div>

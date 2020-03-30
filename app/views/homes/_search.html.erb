@@ -1,0 +1,8 @@
+<%= search_form_for @q do |f| %>
+    <div class="input-group">
+        <%= f.search_field :title_or_body_or_categories_category_or_comments_comment_cont_any, placeholder: "掲示板検索", class: 'form-control' %>
+        <span class="input-group-btn">
+        <%= f.submit '検索', class: "btn btn-primary" %>
+        </span>
+    </div>
+<% end %>

@@ -17,12 +17,25 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
 
-/* Search form  */
-
 .search_form {
   overflow: auto;
   margin: 10px;
   .input-group {
     width: 305px;
   }
+}
+
+.category {
+  display: inline-block;
+  padding: 3px 3px;
+  background-color: #acabab;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 10px;
+}
+
+.board-title{
+	font-size: 18px;
+    marigin-bottom: 10px;
+    padding-bottom: 0.1em;
 }

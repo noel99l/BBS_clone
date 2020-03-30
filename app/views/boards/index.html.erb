@@ -3,21 +3,24 @@
 
     <% provide(:title, @title) %>
     <h1><%= @title %></h1>
+    　<%= will_paginate @boards, :previous_label => ' &lt 前へ', :next_label => '次へ &gt' %>
+
     <ul class="users">
       <% @boards.each do |board| %>
         <div class="board">
-          <%= link_to "#{board.title}", board %> <%= board.created_at %>
-          <% @categories.where(board_id: board).each do |category| %>
-            <span style="font-size: 5px;"><%= category.category %></span>
-          <% end %>
+          <span class="board-title"><%= link_to "#{board.title}", board %></span><%= l board.created_at %>
           <% if board.user == current_user %>
             <%= link_to '[削除]', board, method: :delete, data: { confirm: '削除してもよろしいですか？' } %>
+          <% end %>
+          <% @categories.where(board_id: board).each do |category| %>
+            <span class="category"><%= category.category %></span>
           <% end %>
           <br>
           <%= board.body %><br>
         </div>
         <% end %>
     </ul>
+    <%= will_paginate @boards, :previous_label => ' &lt 前へ', :next_label => '次へ &gt' %>
     <br>
 
     </div>

@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-    	<h1>New Board</h1>
+    	<h1>新規掲示板作成</h1>
 		<%= form_with(model: @board, local: true) do |form| %>
 		  <% if @board.errors.any? %>
 		    <div id="error_explanation">
@@ -16,26 +16,29 @@
 
 		  <div class="field">
 		    <%= form.label :title %>
-		    <%= form.text_field :title %>
+		    <%= form.text_field :title, rows:'1', class: "form-control", placeholder: "タイトル" %>
 		  </div>
 
 		  <div class="field">
 		    <%= form.label :body %>
-		    <%= form.text_area :body %>
+		    <%= form.text_area :body, rows:'5', class: "form-control", placeholder: "内容" %>
 		  </div>
+		  <div class="field">
 		  <%= form.hidden_field :user_id, :value => current_user.id %>
 
 		    <%= form.fields_for :categories do |t| %>
+		    <%= t.label "category" %>
 		      <%= render "category_fields", f: t %>
 		    <% end %>
 		    <div class="links">
-		        <%= link_to_add_association "追加", form, :categories %>
+		        <%= link_to_add_association ">>カテゴリー追加",form, :categories %>
 		    </div>
+		  </div>
 
 		  <div class="actions">
-		    <%= form.submit %>
+		    <%= form.submit "掲示板を作成する", class:"btn btn-lg btn-primary btn-block"%>
 		  </div>
 		<% end %>
-		<%= link_to 'Back', boards_path %>
+		<%= link_to '<<戻る', boards_path %>
 	</div>
 </div>

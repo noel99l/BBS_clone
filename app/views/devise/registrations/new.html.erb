@@ -1,34 +1,50 @@
-<h2>Sign up</h2>
+<section class="slice slice-lg sct-color-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="form-user style-1 rounded has-shadow-1">
+                    <div class="form-header text-center">
+                        <h2 class="form-header-title">新規ユーザー登録</h2><br>
+                    </div>
+                    <div class="form-body">
+                      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+                        <%= render "devise/shared/error_messages", resource: resource %>
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", id:"inputName", placeholder:"メールアドレス" %>
+                      </div><br>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <%= f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control", id:"inputName", placeholder:"名前" %>
+                      </div><br>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <%= f.password_field :password, autocomplete: "new-password", class:"form-control", id:"inputName", placeholder:"パスワード(#{@minimum_password_length}文字以上)" %>
+                      </div><br>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-  </div>
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control", id:"inputName", placeholder:"パスワード再入力" %>
+                      </div><br>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+                      <% if devise_mapping.rememberable? %>
+                        <div class="field">
+                          <%= f.check_box :remember_me %>
+                          <%= f.label :remember_me %>
+                        </div>
+                      <% end %>
+                      <br>
+                      <div class="actions">
+                        <%= f.submit "新規登録", class:"btn btn-warning btn-lg btn-block" %>
+                      </div>
+                    <% end %>
+                    <br>
+                    </div>
+                    <%= render "devise/shared/links" %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,5 +1,4 @@
 <div class="nested-fields">
-    <%= f.label "category" %>
-    <%= f.text_field :category %>
-    <%= link_to_remove_association "削除", f %>
+    <%= f.text_field :category, rows:'1', placeholder: "カテゴリー" %>
+    <%= link_to_remove_association "削除", f ,class:"btn btn-xs btn-danger" %>
 </div>
